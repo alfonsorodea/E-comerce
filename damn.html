@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAMN ART</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>DAMN ART</h1>
+        <button class="checkout-btn" onclick="irAlCarrito()"></button>
+    </header>
+
+    <div class="container">
+
+        <div class="product">
+            <img src="C:\Users\pmarta16\OneDrive - Clarios\Documents\Pagina\img\tote_bag.jpg" alt="Producto 1">
+            <h2>totebag 1/3 </h2>
+            <p>Bolsa de compras ecológica 100% algodón</p>
+            <p>Precio: $1000</p>
+            <button onclick="agregarAlCarrito('totebag 1/3', 1000)">Agregar al carrito</button>
+        </div>
+        <div class="product">
+            <img src="C:\Users\pmarta16\OneDrive - Clarios\Documents\Pagina\img\diseño1.jpeg" alt="Producto 2">
+            <h2>Diseño 1 </h2>
+            <p>Diseño de mtociclista chido</p>
+            <p>Precio: $2500</p>
+            <button onclick="agregarAlCarrito('Diseño 1', 2500)">Agregar al carrito</button>
+        </div>
+
+        <div class="product">
+            <img src="C:\Users\pmarta16\OneDrive - Clarios\Documents\Pagina\img\diseño2.jpeg" alt="Producto 3">
+            <h2>Diseño 2 </h2>
+            <p>Venado con alas</p>
+            <p>Precio: $3500</p>
+            <button onclick="agregarAlCarrito('Diseño 2', 3500)">Agregar al carrito</button>
+        </div>
+
+        <div class="product">
+            <img src="C:\Users\pmarta16\OneDrive - Clarios\Documents\Pagina\img\diseño2.jpeg" alt="Producto 4">
+            <h2>Diseño 3 </h2>
+            <p>DISEÑO</p>
+            <p>Precio: $1500</p>
+            <button onclick="agregarAlCarrito('Diseño 3', 1500)">Agregar al carrito</button>
+        </div>
+
+        <!-- Otros productos aquí -->
+
+    </div>
+
+    <script>
+        function agregarAlCarrito(nombre, precio) {
+            // Obtener los datos actuales del carrito desde el almacenamiento local
+            var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+            // Agregar el producto actual al carrito
+            carrito.push({ nombre: nombre, precio: precio });
+
+            // Guardar los datos actualizados del carrito en el almacenamiento local
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+
+            // Mostrar un mensaje de confirmación
+            alert('El producto "' + nombre + '" se ha agregado al carrito.');
+        }
+
+        function irAlCarrito() {
+            // Redirigir al usuario a la página del carrito
+            window.location.href = 'carrito.html';
+        }
+    </script>
+
+</body>
+
+</html>

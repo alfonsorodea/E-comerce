@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="styles2.css">
+    <!-- Cargar el SDK de PayPal -->
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=Af0E1ArCCWRa5RvE2aBJkvTtKfhN0e3xreTvTX6sgIuBSViVLjyhDJjSBHP3rEC43gGG1hV2uDTm7PNq"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>Carrito de Compras</h1>
+        <button class="vaciar-carro" onclick="vaciarCarrito()"></button>
+        <button class="tienda-home" onclick="irATienda()"></button>
+    </header>
+
+    <div class="container">
+        <h2>Productos en el Carrito:</h2>
+        <ul id="lista-carrito"></ul>
+        <p id="total-carrito">Total: $0</p>
+        <button id="boton-pagar">Pagar</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", mostrarProductosCarrito);
+
+        function mostrarProductosCarrito() {
+            var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+            var listaCarrito = document.getElementById('lista-carrito');
+            var totalCarrito = document.getElementById('total-carrito');
+            var total = 0;
+
+            listaCarrito.innerHTML = '';
+
+            carrito.forEach(function (producto) {
+                var item = document.createElement('li');
+                item.textContent = producto.nombre + ' - Precio: $' + producto.precio;
+                listaCarrito.appendChild(item);
+                total += producto.precio;
+            });
+
+            totalCarrito.textContent = 'Total: $' + total.toFixed(2);
+
+            // Agregar evento al botón de pagar
+            document.getElementById('boton-pagar').addEventListener('click', function () {
+                pagar(total);
+            });
+        }
+
+        function vaciarCarrito() {
+            localStorage.removeItem('carrito');
+            mostrarProductosCarrito();
+        }
+
+        function irATienda() {
+            window.location.href = 'damn.html';
+        }
+
+        function pagar(total) {
+            paypal.Buttons({
+                createOrder: function (data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            amount: {
+                                value: total.toFixed(2)
+                            }
+                        }]
+                    });
+                },
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (details) {
+                        // Aquí puedes procesar el pago o redirigir a una página de confirmación
+                        alert('Pago realizado correctamente. Gracias por su compra.');
+                        vaciarCarrito();
+                    });
+                }
+            }).render('#paypal-button-container');
+        }
+    </script>
+    <div id="paypal-button-container"></div>
+
+</body>
+
+</html>
