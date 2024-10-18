@@ -6,115 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DAMN ART</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background-color: #333;
-            color: white;
-        }
-
-        .checkout-btn {
-            background-color: #ff6600;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            cursor: pointer;
-        }
-
-        .checkout-btn:hover {
-            background-color: #ff8533;
-        }
-
-        #searchBar {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            width: 300px;
-        }
-
-        .container {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-        }
-
-        .products {
-            flex: 1;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .product {
-            background-color: #f4f4f4;
-            padding: 20px;
-            border: 1px solid #ddd;
-            width: 200px;
-            text-align: center;
-        }
-
-        .product img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .carrito-container {
-            flex: 1;
-            padding-left: 20px;
-        }
-
-        #carritoTable {
-            width: 100%;
-        }
-
-        table.dataTable thead th {
-            background-color: #333;
-            color: white;
-        }
-
-        .btn-agregar,
-        .btn-eliminar {
-            background-color: #ff6600;
-            border: none;
-            color: white;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-
-        .btn-eliminar {
-            background-color: #ff3300;
-        }
-
-        .btn-agregar:hover {
-            background-color: #ff8533;
-        }
-
-        .btn-eliminar:hover {
-            background-color: #ff6666;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
     <header>
         <h1>DAMN ART</h1>
-        <link rel="stylesheet" href="styles.css">
         <input type="text" id="searchBar" placeholder="Buscar producto...">
-        <button class="checkout-btn" onclick="irAlCarrito()"></button>
+        <button class="checkout-btn" onclick="irAlCarrito()">
+            <i class="fas fa-shopping-cart"></i>
+        </button>
     </header>
+
+    <div class="tab-toggle" id="tabToggle" onclick="toggleCarrito()">🛍️</div>
 
     <div class="container">
         <div class="products">
             <div class="product">
-                <img src="C:\Users\pmarta16\OneDrive - Clarios\Documents\Pagina\img\tote_bag.jpg" alt="Producto 1">
+                <img src="img/tote_bag.jpg" alt="Producto 1">
                 <h2>totebag 1/3</h2>
                 <p>Bolsa de compras ecológica 100% algodón</p>
                 <p>Precio: $1000</p>
@@ -122,129 +33,42 @@
             </div>
 
             <div class="product">
-                <img src="C:\Users\pmarta16\OneDrive - Clarios\Documents\Pagina\img\diseño1.jpeg" alt="Producto 2">
+                <img src="img/diseño1.jpeg" alt="Producto 2">
                 <h2>Diseño 1</h2>
                 <p>Diseño de motociclista chido</p>
                 <p>Precio: $2500</p>
                 <button onclick="agregarAlCarrito('Diseño 1', 2500)">Agregar al carrito</button>
             </div>
+
             <div class="product">
                 <img src="img/diseño2.jpeg" alt="Producto 3">
                 <h2>Diseño 2</h2>
                 <p>Diseño de motociclista chido</p>
                 <p>Precio: $2500</p>
                 <button onclick="agregarAlCarrito('Diseño 2', 2500)">Agregar al carrito</button>
-
-
-                <!-- Otros productos aquí -->
-            </div>
-
-            <!-- Tabla de carrito -->
-            <div class="carrito-container">
-                <h2>Lista de productos</h2>
-                <table id="carritoTable" class="display">
-                    <thead>
-                        <tr>
-                            <th>Producto</th>
-                            <th>Precio</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tablaProductos">
-                        <!-- Productos generados dinámicamente -->
-                    </tbody>
-                </table>
             </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <div class="carrito-container" id="carritoContainer">
+            <h2>Lista de productos</h2>
+            <table id="carritoTable" class="display">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaProductos">
+                    <!-- Productos generados dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-        <script>
-            $(document).ready(function () {
-                var carritoTable = $('#carritoTable').DataTable();
-
-                // Definir productos disponibles
-                var productos = [
-                    { nombre: 'totebag 1/3', precio: 1000 },
-                    { nombre: 'Diseño 1', precio: 2500 },
-                    { nombre: 'Diseño 2', precio: 3500 },
-                    { nombre: 'Diseño 3', precio: 1500 }
-                ];
-
-                // Cargar lista de productos en la tabla
-                cargarListaProductos(productos);
-
-                // Cargar carrito desde localStorage
-                cargarCarrito();
-
-                // Buscar productos
-                $('#searchBar').on('keyup', function () {
-                    var searchTerm = $(this).val().toLowerCase();
-                    $('.product').each(function () {
-                        var productText = $(this).text().toLowerCase();
-                        $(this).toggle(productText.includes(searchTerm));
-                    });
-                });
-
-                function cargarListaProductos(productos) {
-                    var tablaProductos = $('#tablaProductos');
-                    productos.forEach(function (producto, index) {
-                        var fila = `<tr>
-                        <td>${producto.nombre}</td>
-                        <td>$${producto.precio}</td>
-                        <td>
-                            <button class="btn-agregar" onclick="agregarAlCarrito('${producto.nombre}', ${producto.precio})">Agregar</button>
-                            <button class="btn-eliminar" onclick="eliminarDelCarritoPorNombre('${producto.nombre}')">Eliminar</button>
-                        </td>
-                    </tr>`;
-                        tablaProductos.append(fila);
-                    });
-                }
-
-                function cargarCarrito() {
-                    var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-                    carritoTable.clear();
-
-                    carrito.forEach(function (item, index) {
-                        carritoTable.row.add([
-                            item.nombre,
-                            '$' + item.precio,
-                            `<button onclick="eliminarDelCarrito(${index})">Eliminar</button>`
-                        ]).draw();
-                    });
-                }
-
-                window.agregarAlCarrito = function (nombre, precio) {
-                    var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-                    carrito.push({ nombre: nombre, precio: precio });
-                    localStorage.setItem('carrito', JSON.stringify(carrito));
-                    alert('El producto "' + nombre + '" se ha agregado al carrito.');
-                    cargarCarrito();
-                }
-
-                window.eliminarDelCarrito = function (index) {
-                    var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-                    carrito.splice(index, 1);
-                    localStorage.setItem('carrito', JSON.stringify(carrito));
-                    cargarCarrito();
-                }
-
-                window.eliminarDelCarritoPorNombre = function (nombre) {
-                    var carrito = JSON.parse(localStorage.getItem('carrito')) || [];
-                    var index = carrito.findIndex(item => item.nombre === nombre);
-                    if (index !== -1) {
-                        carrito.splice(index, 1);
-                        localStorage.setItem('carrito', JSON.stringify(carrito));
-                        cargarCarrito();
-                    }
-                }
-
-                window.irAlCarrito = function () {
-                    window.location.href = 'carrito.html';
-                }
-            });
-        </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="script2.js"></script>
 
 </body>
 
