@@ -1,0 +1,275 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #222;
+    color: white;
+}
+
+header h1 {
+    margin-left: 50px;
+    /* Mueve el título hacia la derecha */
+    font-size: 24px;
+}
+
+input#searchBar {
+    width: 250px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.checkout-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+
+.checkout-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Contenedor general y diseño responsivo */
+.container {
+    display: flex;
+    transition: margin-left 0.5s ease;
+}
+
+.products {
+    flex: 3;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.product {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    width: 220px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.product:hover {
+    transform: scale(1.05);
+}
+
+.product img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+button {
+    margin-top: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Pestaña lateral para abrir/cerrar carrito */
+.tab-toggle {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    transition: background-color 0.3s;
+    font-size: 24px;
+}
+
+.tab-toggle:hover {
+    background-color: #45a049;
+}
+
+/* Carrito desplegable desde la izquierda */
+.carrito-container {
+    flex: 1;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: -400px;
+    /* Oculto inicialmente */
+    width: 400px;
+    height: 100vh;
+    overflow-y: auto;
+    transition: left 0.5s ease;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #333;
+    color: white;
+}
+
+thead th,
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:hover {
+    background-color: #eee;
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .carrito-container {
+        width: 100%;
+        left: -100%;
+        /* Oculto completamente */
+    }
+}
+
+/* Pestaña lateral para abrir/cerrar carrito */
+.tab-toggle {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #222;
+    /* Color negro */
+    color: white;
+    padding: 15px;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    transition: background-color 0.3s;
+    font-size: 24px;
+}
+
+.tab-toggle:hover {
+    background-color: #444;
+    /* Un tono gris oscuro para el hover */
+}
+
+/* Carrito desplegable desde la izquierda */
+.carrito-container {
+    flex: 1;
+    background-color: #111;
+    /* Fondo negro */
+    color: white;
+    /* Texto blanco para resaltar en fondo oscuro */
+    border: 1px solid #444;
+    /* Color gris oscuro para el borde */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+    /* Sombra más intensa */
+    position: fixed;
+    top: 0;
+    left: -400px;
+    width: 400px;
+    height: 100vh;
+    overflow-y: auto;
+    transition: left 0.5s ease;
+}
+
+/* Estilos de la tabla en el carrito */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    color: white;
+}
+
+thead {
+    background-color: #333;
+    /* Color gris oscuro para el encabezado */
+    color: white;
+}
+
+thead th,
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+    /* Borde gris claro */
+}
+
+tbody tr:hover {
+    background-color: #444;
+    /* Color gris oscuro al pasar el ratón */
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .carrito-container {
+        width: 100%;
+        left: -100%;
+    }
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    color: red;
+}
